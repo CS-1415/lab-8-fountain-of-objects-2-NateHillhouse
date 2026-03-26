@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "mr2yJGxLaC4=",
-  "success": true,
+  "dgSpecHash": "FBfonPfXeks=",
+  "success": false,
   "projectFilePath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\coverlet.collector\\6.0.2\\coverlet.collector.6.0.2.nupkg.sha512",
@@ -13,7 +13,22 @@
     "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\nunit\\4.2.2\\nunit.4.2.2.nupkg.sha512",
     "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\nunit.analyzers\\4.4.0\\nunit.analyzers.4.4.0.nupkg.sha512",
     "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\nunit3testadapter\\4.6.0\\nunit3testadapter.4.6.0.nupkg.sha512",
-    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512"
+    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512",
+    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.14\\microsoft.netcore.app.ref.9.0.14.nupkg.sha512",
+    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.14\\microsoft.windowsdesktop.app.ref.9.0.14.nupkg.sha512",
+    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.14\\microsoft.aspnetcore.app.ref.9.0.14.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "Project Lab05.Tests is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project Lab05.Tests supports: net10.0 (.NETCoreApp,Version=v10.0)",
+      "projectPath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
+      "filePath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
+      "libraryId": "Lab05.Tests",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
 }

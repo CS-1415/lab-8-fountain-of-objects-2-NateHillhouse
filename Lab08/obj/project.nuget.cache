@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "0V/u5McMl3c=",
+  "dgSpecHash": "fFQLfm614aA=",
   "success": true,
   "projectFilePath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08\\Lab08.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.14\\microsoft.netcore.app.ref.9.0.14.nupkg.sha512",
+    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.14\\microsoft.windowsdesktop.app.ref.9.0.14.nupkg.sha512",
+    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.14\\microsoft.aspnetcore.app.ref.9.0.14.nupkg.sha512"
+  ],
   "logs": []
 }

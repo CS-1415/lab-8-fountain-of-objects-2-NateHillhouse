@@ -347,27 +347,9 @@
           }
         }
       },
-      "Lab05/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v9.0",
-        "compile": {
-          "bin/placeholder/Lab05.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Lab05.dll": {}
-        }
-      },
       "Lab05.Tests/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v9.0",
-        "dependencies": {
-          "Lab05": "1.0.0",
-          "Microsoft.NET.Test.Sdk": "17.12.0",
-          "NUnit": "4.2.2",
-          "NUnit.Analyzers": "4.4.0",
-          "NUnit3TestAdapter": "4.6.0",
-          "coverlet.collector": "6.0.2"
-        },
+        "framework": "Unsupported,Version=v0.0",
         "compile": {
           "bin/placeholder/Lab05.Tests.dll": {}
         },
@@ -822,11 +804,6 @@
         "version.txt"
       ]
     },
-    "Lab05/1.0.0": {
-      "type": "project",
-      "path": "../../lab-5-fractions-NateHillhouse/Lab05/Lab05.csproj",
-      "msbuildProject": "../../lab-5-fractions-NateHillhouse/Lab05/Lab05.csproj"
-    },
     "Lab05.Tests/1.0.0": {
       "type": "project",
       "path": "../../lab-5-fractions-NateHillhouse/Lab05.Tests/Lab05.Tests.csproj",
@@ -892,7 +869,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -930,13 +907,38 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[9.0.14, 9.0.14]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[9.0.14, 9.0.14]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[9.0.14, 9.0.14]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.205/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "Project Lab05.Tests is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project Lab05.Tests supports: net10.0 (.NETCoreApp,Version=v10.0)",
+      "libraryId": "Lab05.Tests",
+      "targetGraphs": [
+        "net9.0"
+      ]
+    }
+  ]
 }
