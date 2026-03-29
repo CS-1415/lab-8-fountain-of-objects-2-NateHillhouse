@@ -1,4 +1,5 @@
 ﻿namespace Lab08.Tests;
+using Lab08;
 
 public class Tests
 {

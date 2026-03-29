@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FBfonPfXeks=",
+  "dgSpecHash": "CNTZGcHXpJ8=",
   "success": false,
   "projectFilePath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
   "expectedPackageFiles": [
@@ -12,22 +12,62 @@
     "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\nunit\\4.2.2\\nunit.4.2.2.nupkg.sha512",
     "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\nunit.analyzers\\4.4.0\\nunit.analyzers.4.4.0.nupkg.sha512",
-    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\nunit3testadapter\\4.6.0\\nunit3testadapter.4.6.0.nupkg.sha512",
-    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512",
-    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.14\\microsoft.netcore.app.ref.9.0.14.nupkg.sha512",
-    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.14\\microsoft.windowsdesktop.app.ref.9.0.14.nupkg.sha512",
-    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.14\\microsoft.aspnetcore.app.ref.9.0.14.nupkg.sha512"
+    "C:\\Users\\nhill_mliw72r\\.nuget\\packages\\nunit3testadapter\\4.6.0\\nunit3testadapter.4.6.0.nupkg.sha512"
   ],
   "logs": [
     {
-      "code": "NU1201",
+      "code": "NU1605",
       "level": "Error",
-      "message": "Project Lab05.Tests is not compatible with net9.0 (.NETCoreApp,Version=v9.0). Project Lab05.Tests supports: net10.0 (.NETCoreApp,Version=v10.0)",
+      "message": "Warning As Error: Detected package downgrade: coverlet.collector from 6.0.4 to 6.0.2. Reference the package directly from the project to select a different version. \r\n Lab08.Tests -> Lab05.Tests -> coverlet.collector (>= 6.0.4) \r\n Lab08.Tests -> coverlet.collector (>= 6.0.2)",
       "projectPath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
       "filePath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
-      "libraryId": "Lab05.Tests",
+      "libraryId": "coverlet.collector",
       "targetGraphs": [
-        "net9.0"
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: Microsoft.NET.Test.Sdk from 17.14.0 to 17.12.0. Reference the package directly from the project to select a different version. \r\n Lab08.Tests -> Lab05.Tests -> Microsoft.NET.Test.Sdk (>= 17.14.0) \r\n Lab08.Tests -> Microsoft.NET.Test.Sdk (>= 17.12.0)",
+      "projectPath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
+      "filePath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
+      "libraryId": "Microsoft.NET.Test.Sdk",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: NUnit from 4.3.2 to 4.2.2. Reference the package directly from the project to select a different version. \r\n Lab08.Tests -> Lab05.Tests -> NUnit (>= 4.3.2) \r\n Lab08.Tests -> NUnit (>= 4.2.2)",
+      "projectPath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
+      "filePath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
+      "libraryId": "NUnit",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: NUnit.Analyzers from 4.7.0 to 4.4.0. Reference the package directly from the project to select a different version. \r\n Lab08.Tests -> Lab05.Tests -> NUnit.Analyzers (>= 4.7.0) \r\n Lab08.Tests -> NUnit.Analyzers (>= 4.4.0)",
+      "projectPath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
+      "filePath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
+      "libraryId": "NUnit.Analyzers",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: NUnit3TestAdapter from 5.0.0 to 4.6.0. Reference the package directly from the project to select a different version. \r\n Lab08.Tests -> Lab05.Tests -> NUnit3TestAdapter (>= 5.0.0) \r\n Lab08.Tests -> NUnit3TestAdapter (>= 4.6.0)",
+      "projectPath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
+      "filePath": "C:\\Users\\nhill_mliw72r\\Documents\\Code_Projects\\my-code-dir\\lab-8-fountain-of-objects-2-NateHillhouse\\Lab08.Tests\\Lab08.Tests.csproj",
+      "libraryId": "NUnit3TestAdapter",
+      "targetGraphs": [
+        "net10.0"
       ]
     }
   ]

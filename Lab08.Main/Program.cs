@@ -5,6 +5,8 @@ class Program
     {
         new Tests();
 
+        /*
+
         UserInterface _interface = new();
 
         Console.Write("What type of world would you like to play? (obstacle, monster) ");
@@ -13,5 +15,8 @@ class Program
         
         if (type == "obstacle") game.ObstacleMap();
         else if (type == "monster") game.MonsterFighter();
+        */
     }
 }
+
+public enum MapType {Obstacle, Monster, Exit, Test}
