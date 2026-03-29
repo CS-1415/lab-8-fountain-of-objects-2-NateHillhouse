@@ -56,7 +56,7 @@ public class GameLoop
     public void MonsterFighter(Movement movement, bool test = false)
     {
         //Add inventory variable
-        
+
         MonsterMap.RandomizeMonsters(ref movement.worldGrid, movement.MonsterList);
         if (test) PrintGrid(movement.worldGrid, size, (0,0));
 
@@ -64,7 +64,7 @@ public class GameLoop
         {
             _interface.PrintMessages(); //May need to change up to suit this gamemode
            
-            Obstacles.SenseObstacles(movement.worldGrid, movement.location, size); //May be used just to sense the fountain
+            MonsterMap.SenseObstacles(movement.worldGrid, movement.location, size); //May be used just to sense the fountain
 
             movement.Move(this, ref loop, size, FountainActive, _interface, changeUserOptions);
         }
@@ -201,7 +201,8 @@ public interface IMonster
     string Name { get; }
     string Type { get; }
     int Health { get; }
-    static int Defense { get; }
+    int Defense { get; }
+    (string name, int level)? Item { get; }
     static string[] NameList => File.ReadAllLines("names.txt");
     static string[] DescriptorList => File.ReadAllLines("adjectives.txt");
     static string[] PossibleItems => File.ReadAllLines("items.txt");
@@ -226,9 +227,9 @@ public class Amarok : IMonster
     static Random Rand => IMonster.Rand;
     public string Name { get; set; }
     public int Health { get; set; } = 40;
-    public static int Defense => 8;
+    public int Defense => 8;
     public static int Level => Rand.Next(2, 5);
-    public static (string, int)? Item => GenerateItem();
+    public (string, int)? Item => GenerateItem();
     public string Type => "Amarok";
 
     static string[] NameList => IMonster.NameList;
@@ -288,7 +289,7 @@ public class Goblin : IMonster
     public string Name { get; set; }
     public string Type => "Goblin";
     public int Health { get; set; }
-    public static int Defense => 4;
+    public int Defense => 4;
     public (string, int)? Item => GenerateItem();
     public static int Level => Rand.Next(1,5);
     static Random Rand => IMonster.Rand;
@@ -346,8 +347,8 @@ public class Maelstrom : IMonster
     public string Name {get; set;}
     public string Type => "Maelstrom";
     public int Health { get; set; } = 30;
-    public static int Defense => 4;
-    public (string, int)? Item = null;
+    public int Defense => 4;
+    public (string, int)? Item => GenerateItem();
     public static int Level => Rand.Next(1,5);
     static Random Rand => IMonster.Rand;
     public Maelstrom(Dictionary<string, IMonster> monsters)
@@ -377,5 +378,18 @@ public class Maelstrom : IMonster
         //Make each name unique
         else foreach (string monsterName in monsters.Keys) if (monsterName == name) return GenerateName(monsters);
         return name;
+    }
+
+        static (string, int)? GenerateItem()
+    {
+        if (Rand.NextDouble() < 0.25)
+        {
+            if (Rand.NextDouble() < 0.75)
+            {
+                return (IMonster.UsefulItems[Rand.Next(IMonster.UsefulItems.Length)], Rand.Next(1,5));
+            }
+            else return (IMonster.PossibleItems[Rand.Next(IMonster.PossibleItems.Length)], 0);
+        }
+        else return null;
     }
 }

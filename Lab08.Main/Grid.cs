@@ -111,38 +111,38 @@ public class Movement
     public bool HitObstacles(Dictionary<string, string[]> movementOptions, UserInterface.ChangeUserOptions changeUserOptions)
     {
         string item = worldGrid[location];
-            switch (item)
-            {
-                case "Pit":
-                    Console.WriteLine("You fell in a pit and died. ");
-                    return false;
-                case "Amaroks":
-                    Console.WriteLine("You got eaten by an Amarok. ");
-                    return false;
-                case "Maelstrom":
-                    HitMaelstrom();
-                    Console.WriteLine($"{location.x}, {location.y}");
-                    Console.WriteLine("You hit the maelstrom! ");
-                    return HitObstacles(movementOptions, changeUserOptions);
-                case "Fountain":
-                    if (!GameLoop.FountainActive) changeUserOptions.AddFountain();
-                    else 
-                    {
-                        movementOptions.Remove("Activate Fountain");
-                        Console.WriteLine("You hear the rushing waters from the Fountain of Objects. It has been reactivated!");
-                    }
-                    return true;
-                case "entrance":
-                    if (GameLoop.FountainActive) 
-                    {
-                        Console.WriteLine("You have succesfully activated the fountain and exited the cave! ");
-                        return false;
-                    }
-                    else Console.WriteLine("You see light in this room coming from outside the cavern. This is the entrance. ");
-                    return true;
-                default:
+        switch (item)
+        {
+            case "Pit":
+                Console.WriteLine("You fell in a pit and died. ");
+                return false;
+            case "Amaroks":
+                Console.WriteLine("You got eaten by an Amarok. ");
+                return false;
+            case "Maelstrom":
+                HitMaelstrom();
+                Console.WriteLine($"{location.x}, {location.y}");
+                Console.WriteLine("You hit the maelstrom! ");
+                return HitObstacles(movementOptions, changeUserOptions);
+            case "Fountain":
+                if (!GameLoop.FountainActive) changeUserOptions.AddFountain();
+                else 
+                {
+                    movementOptions.Remove("Activate Fountain");
+                    Console.WriteLine("You hear the rushing waters from the Fountain of Objects. It has been reactivated!");
+                }
                 return true;
-            }
+            case "entrance":
+                if (GameLoop.FountainActive) 
+                {
+                    Console.WriteLine("You have succesfully activated the fountain and exited the cave! ");
+                    return false;
+                }
+                else Console.WriteLine("You see light in this room coming from outside the cavern. This is the entrance. ");
+                return true;
+            default:
+            return true;
+        }
     }
 
 }
@@ -150,23 +150,123 @@ public class Movement
 
 public class MonsterMap
 {
+    static Random Rand = new();
     public static void RandomizeMonsters(ref Dictionary<(int x, int y), string> worldGrid, Dictionary<string, IMonster> monsters)
     {
-        Random rand = new();
-        
         foreach (KeyValuePair<(int, int), string> gridSquare in worldGrid)
         {
-            double chance = rand.NextDouble();
+            double chance = Rand.NextDouble();
             if (gridSquare.Value == "" && chance < 0.33)
             {
                 IMonster monster;
-                double roll = rand.NextDouble();
+                double roll = Rand.NextDouble();
                 if (roll <.25) monster = new Amarok(monsters);
                 else if (.25 <= roll && roll < .5) monster = new Maelstrom(monsters);
                 else monster = new Goblin(monsters);
 
                 worldGrid[gridSquare.Key] = monster.Name;
                 monsters.Add(monster.Name, monster);
+            }
+        }
+    }
+
+    public bool encounter(Player player, IMonster monster, UserInterface ui, Movement movement)
+    {
+        Dictionary<string, string[]> options = new()
+        {
+            {"attack", ["attack", "a"]},
+            {"heal", ["heal", "h"]}
+        };
+        if (monster.GetType() == typeof(Goblin) || monster.GetType() == typeof(Amarok))
+        {
+            Console.WriteLine($"You encounter the {monster.Type} {monster.Name}!");
+            return Fight();
+        }
+        else 
+        {
+            Console.WriteLine($"You encounter a {monster.Type}!");
+
+            if (Rand.NextDouble() > 0.5)
+            {
+                Console.WriteLine("The Maelstrom tosses you into a different room!");
+                movement.HitMaelstrom();
+                return true;
+            }
+            else return Fight();
+        }
+
+        bool Fight()
+        {
+            while (player.IsAlive() && monster.IsAlive())
+            {
+                Console.WriteLine($"\nYour health: {player.health}");
+                Console.WriteLine($"{GetName(true)} health: ");
+
+                string input = ui.ReadInput("Would you like to attack or heal? ", options);
+
+                //Player's turn
+                if (input == "attack")
+                {
+                    if (Rand.Next(1,21) > monster.Defense)
+                    {
+                        int damage = player.Attack();
+                        monster.TakeDamage(damage);
+                        Console.WriteLine($"The {monster.Type} took {damage} damage!");
+                    }
+                    else Console.WriteLine("You missed! ");
+                }
+                else if (input == "heal")
+                {
+                    player.health += 10;
+                    Console.WriteLine("You healed 10 hp!");
+                }
+
+                //Monster's turn
+                if (Rand.Next(1 ,21) > player.defense)
+                {
+                    int damage = monster.Attack();
+                    player.TakeDamage(damage);
+                    Console.WriteLine($"You took {damage} damage!");
+                }
+                else Console.WriteLine($"The {monster.Type} missed!");
+
+            }
+            if (player.IsAlive())
+            {
+                Console.WriteLine($"You defeated {GetName(false)}!");
+
+                if (monster.Item != null)
+                {
+                    if (monster.Item.Value.level > player.weapon.level)
+                    {
+                        player.weapon = ((string name, int level)) monster.Item;
+                        Console.WriteLine($"You are now wielding a level {player.weapon.level} {player.weapon.name}");
+                    }
+                    else 
+                    {
+                        player.items.Add(monster.Item.Value.name);
+                        Console.WriteLine($"You got: {monster.Item.Value.name}");
+                    }
+                }
+                return true;
+            }
+            else 
+            {
+                Console.WriteLine("You were defeated...");
+                return false;
+            }
+        
+            string GetName(bool possesive)
+            {
+                string suffix;
+                if (possesive) suffix = "'s";
+                else suffix = "";
+
+                if (monster.GetType() == typeof(Goblin) || monster.GetType() == typeof(Amarok))
+                {
+                    return monster.Name + suffix;
+                }
+                else return monster.Type;
             }
         }
     }
