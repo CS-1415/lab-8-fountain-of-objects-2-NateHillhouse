@@ -3,8 +3,8 @@ class Program
 {
     public static void Main()
     {
-        new Tests();
-
+        //new Tests();
+        GameLoop game = new();
         /*
 
         UserInterface _interface = new();

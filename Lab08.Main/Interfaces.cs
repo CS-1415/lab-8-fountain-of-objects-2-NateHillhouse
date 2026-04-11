@@ -15,6 +15,7 @@ public class GameLoop
     public static readonly UserInterface.ChangeUserOptions changeUserOptions = new();
     //Obstacles obstacles = new(); //Used if needed to print the grid
     public static int size;
+    public static PlayerInstance Player => new();
     public GameLoop()
     {
         size = _interface.WorldSize("How big would you like the world to be? (4x4, 6x6, 8x8) ");
@@ -58,7 +59,17 @@ public class GameLoop
         //Add inventory variable
 
         MonsterMap.RandomizeMonsters(ref movement.worldGrid, movement.MonsterList);
-        if (test) PrintGrid(movement.worldGrid, size, (0,0));
+        if (test) 
+        {
+            PrintGrid(movement.worldGrid, size, (0,0));
+            while (true)
+            {
+                movement.Move(this, ref loop, size, FountainActive, _interface, changeUserOptions);
+
+                IMonster? monster = movement.HitMonster(movement.MonsterList);
+                if (monster != null) Console.WriteLine($"{monster.Type} at {movement.location}");
+            }
+        }
 
         while(loop && !test)
         {
@@ -67,10 +78,14 @@ public class GameLoop
             MonsterMap.SenseObstacles(movement.worldGrid, movement.location, size); //May be used just to sense the fountain
 
             movement.Move(this, ref loop, size, FountainActive, _interface, changeUserOptions);
+
+            IMonster? monster = movement.HitMonster(movement.MonsterList);
+           if (monster != null) loop = MonsterMap.Encounter(Player, monster, _interface, movement);
+           movement.worldGrid[movement.location] = ""; 
         }
     }
 
-    public void PrintGrid(Dictionary<(int, int), string> worldGrid, int size, (int, int) location)
+    public static void PrintGrid(Dictionary<(int, int), string> worldGrid, int size, (int, int) location)
     {
         for (int i = 1; i <= size; i ++)
         {
@@ -202,7 +217,7 @@ public interface IMonster
     string Type { get; }
     int Health { get; }
     int Defense { get; }
-    (string name, int level)? Item { get; }
+    (string name, int level) Item { get; }
     static string[] NameList => File.ReadAllLines("names.txt");
     static string[] DescriptorList => File.ReadAllLines("adjectives.txt");
     static string[] PossibleItems => File.ReadAllLines("items.txt");
@@ -229,7 +244,7 @@ public class Amarok : IMonster
     public int Health { get; set; } = 40;
     public int Defense => 8;
     public static int Level => Rand.Next(2, 5);
-    public (string, int)? Item => GenerateItem();
+    public (string, int) Item => GenerateItem();
     public string Type => "Amarok";
 
     static string[] NameList => IMonster.NameList;
@@ -241,6 +256,7 @@ public class Amarok : IMonster
     public Amarok(Dictionary<string, IMonster> MonsterList)
     {
         Name = GenerateName(MonsterList);
+        Health = 40;
     }
     public int Attack()
     {
@@ -269,7 +285,7 @@ public class Amarok : IMonster
         return name;
     }
 
-    static (string, int)? GenerateItem()
+    static (string, int) GenerateItem()
     {
         if (Rand.NextDouble() < 0.25)
         {
@@ -279,7 +295,7 @@ public class Amarok : IMonster
             }
             else return (PossibleItems[Rand.Next(PossibleItems.Length)], 0);
         }
-        else return null;
+        else return ("", 0);
     }
 
 }
@@ -288,9 +304,9 @@ public class Goblin : IMonster
 {
     public string Name { get; set; }
     public string Type => "Goblin";
-    public int Health { get; set; }
+    public int Health { get; set; }= 25;
     public int Defense => 4;
-    public (string, int)? Item => GenerateItem();
+    public (string, int) Item => GenerateItem();
     public static int Level => Rand.Next(1,5);
     static Random Rand => IMonster.Rand;
     static string[] NameList => IMonster.NameList;
@@ -301,20 +317,22 @@ public class Goblin : IMonster
     public Goblin(Dictionary<string, IMonster> monsters)
     {
         Name = GenerateName(monsters);
-        Health = Rand.Next(15, 25);
+        //Health = Rand.Next(15, 25);
     }
 
     public int Attack()
     {
-        return 0;
+        return Rand.Next(1, 8);;
     }
     public void TakeDamage(int damage)
     {
         Health -= damage;
+        Console.WriteLine($"The {Name} takes {damage} damage!");
+    
     }
     public bool IsAlive()
     {
-        return Health <= 0;
+        return Health > 0;
     }
 
     static string GenerateName(Dictionary<string, IMonster> monsters)
@@ -328,7 +346,7 @@ public class Goblin : IMonster
         return name;
     }
 
-    static (string, int)? GenerateItem()
+    static (string, int) GenerateItem()
     {
         if (Rand.NextDouble() < 0.25)
         {
@@ -338,7 +356,7 @@ public class Goblin : IMonster
             }
             else return (PossibleItems[Rand.Next(PossibleItems.Length)], 0);
         }
-        else return null;
+        else return ("", 0);
     }
 }
 
@@ -348,7 +366,7 @@ public class Maelstrom : IMonster
     public string Type => "Maelstrom";
     public int Health { get; set; } = 30;
     public int Defense => 4;
-    public (string, int)? Item => GenerateItem();
+    public (string, int) Item => GenerateItem();
     public static int Level => Rand.Next(1,5);
     static Random Rand => IMonster.Rand;
     public Maelstrom(Dictionary<string, IMonster> monsters)
@@ -380,7 +398,7 @@ public class Maelstrom : IMonster
         return name;
     }
 
-        static (string, int)? GenerateItem()
+        static (string, int) GenerateItem()
     {
         if (Rand.NextDouble() < 0.25)
         {
@@ -390,6 +408,6 @@ public class Maelstrom : IMonster
             }
             else return (IMonster.PossibleItems[Rand.Next(IMonster.PossibleItems.Length)], 0);
         }
-        else return null;
+        else return ("", 0);
     }
 }

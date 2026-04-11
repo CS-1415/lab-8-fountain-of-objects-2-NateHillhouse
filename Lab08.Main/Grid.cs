@@ -145,6 +145,16 @@ public class Movement
         }
     }
 
+    public IMonster? HitMonster(Dictionary<string, IMonster> monsterList)
+    {
+        string item = worldGrid[location];
+        if (item != "")
+        {
+            if (item == "entrance" || item == "fountain") return null;
+            else return monsterList[item];
+        }
+        else return null;
+    }
 }
 
 
@@ -170,12 +180,13 @@ public class MonsterMap
         }
     }
 
-    public bool encounter(Player player, IMonster monster, UserInterface ui, Movement movement)
+    public static bool Encounter(PlayerInstance player, IMonster monster, UserInterface ui, Movement movement)
     {
         Dictionary<string, string[]> options = new()
         {
             {"attack", ["attack", "a"]},
-            {"heal", ["heal", "h"]}
+            {"heal", ["heal", "h"]},
+            {"exit", ["exit", "e"]}
         };
         if (monster.GetType() == typeof(Goblin) || monster.GetType() == typeof(Amarok))
         {
@@ -200,7 +211,7 @@ public class MonsterMap
             while (player.IsAlive() && monster.IsAlive())
             {
                 Console.WriteLine($"\nYour health: {player.health}");
-                Console.WriteLine($"{GetName(true)} health: ");
+                Console.WriteLine($"{GetName(true)} health: {monster.Health}");
 
                 string input = ui.ReadInput("Would you like to attack or heal? ", options);
 
@@ -211,7 +222,6 @@ public class MonsterMap
                     {
                         int damage = player.Attack();
                         monster.TakeDamage(damage);
-                        Console.WriteLine($"The {monster.Type} took {damage} damage!");
                     }
                     else Console.WriteLine("You missed! ");
                 }
@@ -220,13 +230,13 @@ public class MonsterMap
                     player.health += 10;
                     Console.WriteLine("You healed 10 hp!");
                 }
+                else return false;
 
                 //Monster's turn
                 if (Rand.Next(1 ,21) > player.defense)
                 {
                     int damage = monster.Attack();
                     player.TakeDamage(damage);
-                    Console.WriteLine($"You took {damage} damage!");
                 }
                 else Console.WriteLine($"The {monster.Type} missed!");
 
@@ -235,19 +245,20 @@ public class MonsterMap
             {
                 Console.WriteLine($"You defeated {GetName(false)}!");
 
-                if (monster.Item != null)
+                if (monster.Item.name != "")
                 {
-                    if (monster.Item.Value.level > player.weapon.level)
+                    if (monster.Item.level > player.weapon.level)
                     {
-                        player.weapon = ((string name, int level)) monster.Item;
+                        player.weapon = monster.Item;
                         Console.WriteLine($"You are now wielding a level {player.weapon.level} {player.weapon.name}");
                     }
                     else 
                     {
-                        player.items.Add(monster.Item.Value.name);
-                        Console.WriteLine($"You got: {monster.Item.Value.name}");
+                        player.items.Add(monster.Item.name);
+                        Console.WriteLine($"You got: {monster.Item.name}");
                     }
                 }
+
                 return true;
             }
             else 
@@ -314,7 +325,7 @@ public class MonsterMap
     }
 }
 
-public class Player
+public class PlayerInstance
 {
     //public readonly int level;
     public (string name, int level) weapon;
@@ -323,9 +334,9 @@ public class Player
     public List<string> items = [];
     Random rand = new();
 
-    Player()
+    public PlayerInstance()
     {
-        weapon = ("Basic Sword", 1);
+        weapon = ("Basic Sword", 10);
         items.Add(weapon.name);
     }
 
